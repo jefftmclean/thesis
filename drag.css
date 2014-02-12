@@ -1,0 +1,103 @@
+@keyframes fadeIn{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+body{
+  padding: 60px;
+  opacity: 0;
+  background: url("metal.png");
+}
+.pep{
+  height: 40px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: left .1s, top .1s;
+  -moz-transition: left .1s, top .1s;
+  -ms-transition: left .1s, top .1s;
+  -o-transition: left .1s, top .1s;
+  transition: left .1s, top .1s;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 20px;
+  font-family: arial, sans-serif;
+  background: rgba(255,255,255,0.2);
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+}
+.master .one{
+  color: #88A61B;
+  border-top: 7px solid #88A61B;
+  /*box-shadow: inset 1px 0 0 0 #88A61B, inset -1px 0 0 0 #88A61B;*/
+  /*box-shadow: inset 1px 0 0 0 #88A61B, inset 0 0 0 1px #eee;*/
+}
+.master .two{
+  color: #0E3D59;
+  border-top: 7px solid #0E3D59;
+  /*box-shadow: inset 1px 0 0 0 #0E3D59, inset -1px 0 0 0 #0E3D59;*/
+  /*box-shadow: inset 1px 0 0 0 #0E3D59, inset 0 0 0 1px #eee;*/
+}
+.master .four{
+  color: #D92525;
+  border-top: 7px solid #D92525;
+  /*box-shadow: inset 1px 0 0 0 #D92525, inset -1px 0 0 0 #D92525;*/
+  /*box-shadow: inset 1px 0 0 0 #D92525, inset 0 0 0 1px #eee;*/
+}
+.master{
+  height: 80px;
+  float: left;
+  margin-right: 50px;
+}
+#grid {
+  border-top: 7px solid #444;
+  width: 800px;
+  height: 408px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+}
+#grid li{
+  height: 40px;
+  -webkit-transition: background .2s;
+  float: left;
+  background: rgba(255,255,255,0.3);
+}
+.pep-active{
+  z-index: 5;
+  -webkit-transition: box-shadow .2s;
+  -moz-transition: box-shadow .2s;
+  -ms-transition: box-shadow .2s;
+  -o-transition: box-shadow .2s;
+  transition: box-shadow .3s;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.2);
+}
+#grid .grid-playback-active{
+  background-color: rgba(255,255,255,0.45);
+  /*-webkit-transition: background .3s;*/
+}
+#trash{
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  bottom: 0;
+  right: 0;
+  background: red;
+}
+#top-one{
+  padding: 8px;
+  font-weight: 900;
+  font-size: 20px;
+  font-family: arial, sans-serif;
+  color: #444;
+}
