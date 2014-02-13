@@ -20,8 +20,9 @@ $(document).ready(function(){
 
   var units = 8;
 
-  var rows = 10;
+  var rows = 9;
 
+  var htmlFractions = ["0","&#8539;","&#188;","&#8540;","&#189;","&#8541;","&#190;","&#8542;"]
   generateGrid = function(cols){
     $("#grid").empty();
     for (i=0;i<rows;i++){
@@ -48,7 +49,7 @@ $(document).ready(function(){
   } else {
     context = new AudioContext();
   }
-  var tones = [C6,A5,G5,E5,D5,C5,A4,G4,E4,C4];
+  var tones = [A5,G5,E5,D5,C5,A4,G4,E4,C4];
   gains = [];
   envelopes = [];
   oscillators = [];
@@ -92,21 +93,36 @@ $(document).ready(function(){
         }, false);
 
   var grid = $('#grid .target');
+  var $one = $('#m-one .pep').clone();
+  var $two = $('#m-two .pep').clone();
+  var $four = $('#m-four .pep').clone();
   function place() {
-    if( $('.pep-active').attr("data-master") === "true" ){
-      console.log($('.pep-active').attr("data-master"));
-      $('.pep-active').attr("data-master","false");
-      $('.pep-active').parent().append('<div class="pep four" data-location="0" data-duration="4" data-master="true">&frac12;</div>');
-      var blockWidth = $('.pep-active').width();
-      $('.pep-active').siblings(":last").width( blockWidth );
-      initializePep();
+    var $pepActive = $('.pep-active');
+    if( $pepActive.attr("data-master") === "true" ){
+      switch($pepActive.attr("data-duration")){
+        case "1":
+          $("#m-one").prepend($one.clone());
+          initializePep();
+          break;
+        case "2":
+          $("#m-two").prepend($two.clone());
+          initializePep();
+          break;
+        case "4":
+          $("#m-four").prepend($four.clone());
+          initializePep();
+          break;
+        default:
+          break;
+      }
+      $pepActive.attr("data-master", "false");
     }
     var blocks = $('.pep');
     var snap = grid[0];
     var location;
-    var duration = parseInt($('.pep-active').attr("data-duration"));
+    var duration = parseInt($pepActive.attr("data-duration"));
     for(i=0;i<grid.length;i++){
-      grid[i].distance = Math.sqrt(Math.pow(grid[i].offsetLeft-$('.pep-active').offset().left, 2) + Math.pow(grid[i].offsetTop-$('.pep-active').offset().top, 2));
+      grid[i].distance = Math.sqrt(Math.pow(grid[i].offsetLeft-$pepActive.offset().left, 2) + Math.pow(grid[i].offsetTop-$pepActive.offset().top, 2));
       function available(){
         if(i+duration>grid.length){
           return false;
@@ -124,13 +140,13 @@ $(document).ready(function(){
       }
     }
     if(snap.distance<120){
-      $('.pep-active').attr("data-location", location);
+      $pepActive.attr("data-location", location);
       for(i=0;i<duration;i++){
         grid[location+i].setAttribute("data-switch", "on");
       }
-      $('.pep-active').offset({top:snap.offsetTop,left:snap.offsetLeft});
+      $pepActive.offset({top:snap.offsetTop,left:snap.offsetLeft});
     } else {
-      $('.pep-active').remove();
+      $pepActive.remove();
     } 
   }
   function pickup(){
@@ -189,7 +205,18 @@ $(document).ready(function(){
       grid[i].classList.remove("grid-playback-active");
     };
   }
-  play(2500);
+  var isPlaying = false;
+  $('#play').click(function(){
+    if (isPlaying === false){
+      $(this).html("stop!");
+      play(3000);
+      isPlaying = true;
+    } else {
+      $(this).html("play!");
+      stop();
+      isPlaying = false;
+    }
+  });
   $("body").animate({opacity:1}, 1000);
 
 });
@@ -197,56 +224,20 @@ $(document).ready(function(){
   </script>
 </head>
 <body>
-  <!-- <div class="pep two"></div> -->
-  <span id="top-one">1</span>
-  <div id="grid">
-  </div>
-  <div class="master one" data-holder="one">
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-    <div class="pep one" data-location="0" data-duration="1">&frac18;</div>
-  </div>
-  <div class="master two" data-holder="two">
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-    <div class="pep two" data-location="0" data-duration="2">&frac14;</div>
-  </div>
-  <div class="master four" data-holder="four">
-    <div class="pep four origin" data-location="0" data-duration="4" data-master="true">&frac12;</div>
+  <div id="wrapper">
+    <span id="top-one">1</span>
+    <span id="play">play!</span>
+    <div id="grid">
+    </div>
+    <div id="m-one" class="master one" data-holder="one">
+      <div class="pep one" data-location="0" data-duration="1" data-master="true">&frac18;</div>
+    </div>
+    <div id="m-two" class="master two" data-holder="two">
+      <div class="pep two" data-location="0" data-duration="2" data-master="true">&frac14;</div>
+    </div>
+    <div id="m-four" class="master four" data-holder="four">
+      <div class="pep four" data-location="0" data-duration="4" data-master="true">&frac12;</div>
+    </div>
   </div>
 </body>
 </html>
